@@ -25,10 +25,8 @@ axis::~axis()
 void axis::draw(GLuint shader) const
 {
 	GLuint uniModel = glGetUniformLocation(shader, "model");
-	GLuint uniLighting = glGetUniformLocation(shader, "do_lighting");
 	glm::mat4 transform = glm::translate(glm::mat4(), o);
 	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(transform));
-	glUniform1i(uniLighting, GL_FALSE);
 
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_LINES, 0, vertices.size());
@@ -37,11 +35,10 @@ void axis::draw(GLuint shader) const
 
 void axis::setup()
 {
+	assert(!VAO);
+
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);

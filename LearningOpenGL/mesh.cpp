@@ -3,28 +3,24 @@
 #include "triangle.h"
 #include <glad/glad.h>
 
-// TODO valid copy constructor
-
-mesh::mesh()
-{
-	
-}
-
-mesh::mesh(bool use_elements)
-{
-	this->use_elements = use_elements;
-}
-
 mesh::mesh(std::vector<vertex> &vertices, std::vector<GLuint> &elements)
 {
 	this->vertices = vertices;
 	this->elements = elements;
 	this->use_elements = true;
+	setup();
 }
 
 mesh::mesh(std::vector<vertex> &vertices)
 {
 	this->vertices = vertices;
+	setup();
+}
+
+mesh::mesh(std::vector<triangle>& triangles)
+{
+	this->add(triangles);
+	setup();
 }
 
 mesh::mesh(const mesh& other)
@@ -86,9 +82,7 @@ mesh::~mesh()
 void mesh::draw(GLuint shader) const
 {
 	GLuint uniModel = glGetUniformLocation(shader, "model");
-	GLuint uniLighting = glGetUniformLocation(shader, "do_lighting");
 	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(transform));
-	glUniform1i(uniLighting, GL_TRUE);
 
 	glBindVertexArray(VAO);
 
@@ -97,11 +91,25 @@ void mesh::draw(GLuint shader) const
 		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);			// this is required because my intel graphics card
 		glDrawElements(GL_TRIANGLES, elements.size(), GL_UNSIGNED_INT, 0);
 	}
-	
+
 	else {
 		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	}
 	glBindVertexArray(NULL);
+}
+
+void mesh::update()
+{
+	// HACK: untested
+	assert(VBO && EBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof vertex, (void*)&vertices[0], GL_STATIC_DRAW);
+
+	if (use_elements) {
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof GLuint, (void*)&elements[0], GL_STATIC_DRAW);
+	}
 }
 
 void mesh::add(triangle triangle) // TODO make this abstract
@@ -115,10 +123,10 @@ void mesh::add(std::vector<triangle> &triangles)
 		this->vertices.insert(vertices.end(), i->vertices, i->vertices + 3);
 }
 
-void mesh::update()
+void mesh::setup()
 {
-	if (VAO)
-		glDeleteVertexArrays(1, &VAO);
+	// HACK: untested
+	assert(!VAO);
 
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -136,6 +144,6 @@ void mesh::update()
 
 	vertex::set_vertex_attrib();
 	glBindVertexArray(NULL);
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
 }
+
+

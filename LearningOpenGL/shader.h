@@ -9,15 +9,16 @@ public:
 	~shader() { glDeleteProgram(mProgram); }
 
 	// Public Member Functions
-	shader& activate();
-	shader& attach(std::string const & filename);
-	GLuint   create(std::string const & filename);
-	GLuint   get() { return mProgram; }
-	shader& link();
+	shader&		activate();
+	shader&		attach(std::string const & filename);
+	GLuint		create(std::string const & filename);
+	GLuint		get() const { return mProgram; }
+	shader&		link();
 
 	// Wrap Calls to glUniform
-	void bind(unsigned int location, float value);
-	void bind(unsigned int location, glm::mat4 const & matrix);
+	static void bind(unsigned int location, float value);
+	void		bind(unsigned int location, glm::mat4 const & matrix) const;
+	void		bind(unsigned int location, glm::vec3 const & vec3) const;
 	template<typename T> shader & bind(std::string const & name, T&& value)
 	{
 		int location = glGetUniformLocation(mProgram, name.c_str());

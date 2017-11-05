@@ -51,6 +51,9 @@
     <ClInclude Include="rubiks_cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -86,6 +89,9 @@
     <ClCompile Include="rubiks_cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="LearningOpenGL.rc">
@@ -93,10 +99,10 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="fragment.g">
+    <Text Include="fragment.frag">
       <Filter>shaders</Filter>
     </Text>
-    <Text Include="vertex.g">
+    <Text Include="vertex.vert">
       <Filter>shaders</Filter>
     </Text>
   </ItemGroup>

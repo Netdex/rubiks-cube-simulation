@@ -1,7 +1,7 @@
 #pragma once
 #include "mesh.h"
 
-const float CUBIE_SPACING = 0.1f;
+
 
 struct cubie_info
 {
@@ -15,6 +15,8 @@ struct cubie_info
 };
 class rubiks_cube
 {
+	const float CUBIE_SPACING = 0.1f;
+
 	cubie_info cubies[27];
 public:
 	float rot_prog = 0;		// rotation progress

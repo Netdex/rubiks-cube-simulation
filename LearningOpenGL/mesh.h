@@ -11,11 +11,10 @@ public:
 	glm::mat4 transform;
 
 	bool use_elements = false;
-
-	mesh();
-	mesh(bool use_elements);
+	
 	mesh(std::vector<vertex> &vertices, std::vector<GLuint> &elements);
 	mesh(std::vector<vertex> &vertices);
+	mesh(std::vector<triangle> &triangles);
 
 	mesh(const mesh& other);
 	mesh(mesh&& other) noexcept;
@@ -24,11 +23,13 @@ public:
 
 	virtual ~mesh();
 	void draw(GLuint shader) const;
-	void add(triangle triangle);
-	void add(std::vector<triangle> &triangles);
+	
 	void update();
-
 private:
 	GLuint VAO = NULL, VBO = NULL, EBO = NULL;
+	void setup();
+
+	void add(triangle triangle);
+	void add(std::vector<triangle> &triangles);
 };
 

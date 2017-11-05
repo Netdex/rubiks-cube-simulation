@@ -14,9 +14,13 @@ shader& shader::activate()
 }
 
 void shader::bind(unsigned int location, float value) { glUniform1f(location, value); }
-void shader::bind(unsigned int location, glm::mat4 const & matrix)
+void shader::bind(unsigned int location, glm::mat4 const & matrix) const
 {
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+void shader::bind(unsigned int location, glm::vec3 const & vec3) const
+{
+	glUniform3fv(location, 1, glm::value_ptr(vec3));
 }
 
 shader& shader::attach(std::string const & filename)

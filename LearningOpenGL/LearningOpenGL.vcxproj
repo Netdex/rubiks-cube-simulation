@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="axis.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="construct.h" />
     <ClInclude Include="glsl_io.h" />
     <ClInclude Include="mesh.h" />
@@ -139,6 +140,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="axis.cpp" />
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="construct.cpp" />
     <ClCompile Include="glsl_io.cpp" />
     <ClCompile Include="main.cpp" />
@@ -153,10 +155,10 @@
     <ClCompile Include="vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="fragment.g">
+    <Text Include="fragment.frag">
       <FileType>Document</FileType>
     </Text>
-    <Text Include="vertex.g">
+    <Text Include="vertex.vert">
       <FileType>Document</FileType>
     </Text>
   </ItemGroup>

@@ -104,7 +104,7 @@ bool rubiks_cube::rotate_step(int face, bool cw, float ang)
 			{
 				rotate(cubie, face, (cw ? 1 : -1) * (-rot_prog + glm::pi<float>() / 2));
 				//printf("%d: %d %d %d", CUBIE_FACE_COORD[face][0], cubie->pe[0], cubie->pe[1], cubie->pe[2]);
-				bool determinant = !(cw ^ CUBIE_FACE_COORD[face][1] == 1);
+				bool determinant = !(cw ^ (CUBIE_FACE_COORD[face][1] == 1));
 				switch(CUBIE_FACE_COORD[face][0])
 				{
 				case 0:			// rotation about yz-plane
@@ -158,9 +158,7 @@ mesh* rubiks_cube::build_cubie(int p[], glm::vec3 c[])
 			));
 		}
 	}
-	mesh *m = new mesh();
-	m->add(vertices);
-	m->update();
+	mesh *m = new mesh(vertices);
 	return m;
 }
 
